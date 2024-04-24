@@ -35,9 +35,7 @@ public class Project implements Serializable {
     public List<Ticket> getTickets() {
         return this.tickets;
     }
-
-
-
+ 
     public void setId(Long id) {
         this.id = id;
     }
