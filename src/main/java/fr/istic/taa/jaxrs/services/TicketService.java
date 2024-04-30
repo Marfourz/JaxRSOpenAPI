@@ -1,12 +1,14 @@
 package fr.istic.taa.jaxrs.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.istic.taa.jaxrs.dao.ProjectDao;
 import fr.istic.taa.jaxrs.dao.TagDao;
 import fr.istic.taa.jaxrs.dao.TicketDao;
 import fr.istic.taa.jaxrs.dao.UserDao;
-import fr.istic.taa.jaxrs.dtos.TicketDto;
+import fr.istic.taa.jaxrs.dtos.ticket.TicketCreateDTO;
+import fr.istic.taa.jaxrs.dtos.ticket.TicketDTO;
 import fr.istic.taa.jaxrs.models.Project;
 import fr.istic.taa.jaxrs.models.Tag;
 import fr.istic.taa.jaxrs.models.Ticket;
@@ -28,7 +30,7 @@ public class TicketService {
 
     
 
-    public Ticket create(TicketDto ticketDto){
+    public Ticket create(TicketCreateDTO ticketDto){
 
         Project project = projectDao.getReference(ticketDto.getProjectId());
         User creator = userDao.getReference(ticketDto.getProjectId());
@@ -52,5 +54,28 @@ public class TicketService {
     }
 
 
+    public List<TicketDTO> findByProject(Long projectId){
+        List<Ticket> tickets = ticketDao.getTicketsByProject(projectId);
+        return mapToDTOList(tickets);
+    }
 
+
+
+    private TicketDTO mapToDTO(Ticket ticket) {
+        return new TicketDTO(ticket.getId(), 
+        ticket.getTitle(), 
+        ticket.getDescription(),
+        ticket.getCreatedAt(),
+        ticket.getCreator(),
+        ticket.getAssignedUsers(),
+        ticket.getTags());
+    }
+
+    private List<TicketDTO> mapToDTOList(List<Ticket> tickets) {
+        List<TicketDTO> ticketDTOs = new ArrayList<>();
+        for (Ticket ticket : tickets) {
+            ticketDTOs.add(mapToDTO(ticket));
+        }
+        return ticketDTOs;
+    }
 }

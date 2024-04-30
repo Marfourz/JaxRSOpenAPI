@@ -5,7 +5,8 @@ import java.util.List;
 
 import fr.istic.taa.jaxrs.dao.ProjectDao;
 import fr.istic.taa.jaxrs.dao.TicketDao;
-import fr.istic.taa.jaxrs.dtos.TicketDto;
+import fr.istic.taa.jaxrs.dtos.ticket.TicketCreateDTO;
+import fr.istic.taa.jaxrs.dtos.ticket.TicketDTO;
 import fr.istic.taa.jaxrs.models.Project;
 import fr.istic.taa.jaxrs.models.Ticket;
 import fr.istic.taa.jaxrs.services.TicketService;
@@ -37,8 +38,8 @@ public class TicketResource {
 
     @GET
     @Path("/")
-    public List<Ticket> getTickets(@QueryParam("projectId") Long projectId){
-        List<Ticket> tickets = ticketDao.getTicketsByProject(projectId);
+    public List<TicketDTO> getTickets(@QueryParam("projectId") Long projectId){
+        List<TicketDTO> tickets = ticketService.findByProject(projectId);
         return tickets;
     }
 
@@ -55,7 +56,7 @@ public class TicketResource {
 
     @POST
     @Path("/")
-    public Ticket create(TicketDto ticketDto)
+    public Ticket create(TicketCreateDTO ticketDto)
     {
         return ticketService.create(ticketDto);
     }

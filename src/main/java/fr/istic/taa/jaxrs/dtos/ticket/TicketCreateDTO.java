@@ -1,8 +1,8 @@
-package fr.istic.taa.jaxrs.dtos;
+package fr.istic.taa.jaxrs.dtos.ticket;
 
 import java.util.List;
 
-public class TicketDto {
+public class TicketCreateDTO {
     private String title;
     private String description;
     private Long projectId;
@@ -11,9 +11,9 @@ public class TicketDto {
     private List <Long> tagIds;
 
 
-    public TicketDto(){}
+    public TicketCreateDTO(){}
     
-    public TicketDto(String title, String description, Long projectId, Long userId, List<Long> assignedUserIds, List<Long> tagIds) {
+    public TicketCreateDTO(String title, String description, Long projectId, Long userId, List<Long> assignedUserIds, List<Long> tagIds) {
         this.title = title;
         this.description = description;
         this.projectId = projectId;

@@ -1,5 +1,4 @@
 package fr.istic.taa.jaxrs.dtos;
-import java.util.Objects;
 
 public class ProjectDto {
     private String name;

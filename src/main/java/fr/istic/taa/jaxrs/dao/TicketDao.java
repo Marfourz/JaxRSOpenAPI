@@ -15,12 +15,13 @@ public class TicketDao extends AbstractJpaDao<Long,Ticket> {
 
     public List<Ticket> getTicketsByProject(Long projectId){
 
-        String query = "select t from Ticket as t where t.projectId = :projectId";
+        String query = "select t from Ticket t where t.project.id = :projectId";
 
         List<Ticket> tickets = this.entityManager
                                 .createQuery(query, Ticket.class)
                                 .setParameter("projectId", projectId)
                                 .getResultList();
+        System.out.println(tickets);
         return tickets;
     }
 

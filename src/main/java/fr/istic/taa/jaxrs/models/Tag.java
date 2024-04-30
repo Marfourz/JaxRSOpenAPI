@@ -2,7 +2,6 @@ package fr.istic.taa.jaxrs.models;
 
 import java.io.Serializable;
 
-import javax.annotation.processing.Generated;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +14,15 @@ public class Tag implements Serializable {
     private Long id;
     private String code;
     private String label;
+    private String color;
+
+    public String getColor() {
+        return this.color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 
 
     public Tag() {

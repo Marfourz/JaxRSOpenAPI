@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -24,6 +27,7 @@ public class Ticket implements Serializable{
     private String title;
     private Date createdAt;
     private String description;
+
     private User creator;
     private List<User> assignedUsers ;
     private List <Tag> tags;
@@ -59,7 +63,7 @@ public class Ticket implements Serializable{
         return this.id;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public User getCreator() {
         return this.creator;
     }

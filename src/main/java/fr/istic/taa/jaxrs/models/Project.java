@@ -3,6 +3,8 @@ package fr.istic.taa.jaxrs.models;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity()
@@ -32,6 +34,7 @@ public class Project implements Serializable {
     }
 
     @OneToMany(mappedBy="project")
+    @JsonIgnore
     public List<Ticket> getTickets() {
         return this.tickets;
     }

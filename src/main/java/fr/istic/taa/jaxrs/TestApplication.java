@@ -23,6 +23,7 @@ import fr.istic.taa.jaxrs.models.Ticket;
 import fr.istic.taa.jaxrs.models.User;
 import fr.istic.taa.jaxrs.rest.ProjectResource;
 import fr.istic.taa.jaxrs.rest.SwaggerResource;
+import fr.istic.taa.jaxrs.rest.TagResource;
 import fr.istic.taa.jaxrs.rest.TicketResource;
 import fr.istic.taa.jaxrs.rest.UserResource;
 import io.swagger.v3.jaxrs2.integration.resources.AcceptHeaderOpenApiResource;
@@ -46,6 +47,7 @@ public class TestApplication extends Application {
         resources.add(ProjectResource.class);
         resources.add(UserResource.class);
         resources.add(TicketResource.class);
+        resources.add(TagResource.class);
         resources.add(AcceptHeaderOpenApiResource.class);
         resources.add(SwaggerResource.class);
          

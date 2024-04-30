@@ -4,6 +4,9 @@ package fr.istic.taa.jaxrs.models;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import fr.istic.taa.jaxrs.models.enums.Role;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -50,7 +53,8 @@ public class User implements Serializable {
         return id;
     }
 
-    @OneToMany(mappedBy = "creator", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "creator")
+    @JsonIgnore
     public List<Ticket> getTicketsCreated() {
         return this.ticketsCreated;
     }
