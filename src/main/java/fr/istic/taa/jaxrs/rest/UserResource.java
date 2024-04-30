@@ -4,7 +4,9 @@ package fr.istic.taa.jaxrs.rest;
 import java.util.List;
 
 import fr.istic.taa.jaxrs.dao.UserDao;
+import fr.istic.taa.jaxrs.dtos.user.UserDTO;
 import fr.istic.taa.jaxrs.models.User;
+import fr.istic.taa.jaxrs.services.UserService;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.NotFoundException;
@@ -18,38 +20,33 @@ import jakarta.ws.rs.Produces;
 public class UserResource {
     
     UserDao userDao;
+    UserService userService;
     
     
 
     public UserResource(){
         userDao = new UserDao();
+        userService = new UserService();
     }
 
     @GET
     @Path("/")
-    public List<User> getUsers(){
-        
-        List<User> users = userDao.findAll();
+    public List<UserDTO> getUsers(){
+        List<UserDTO> users = userService.findAll();
         return users;
     }
 
     @GET
     @Path("/{userId}")
     public User getUserById(@PathParam("userId") Long userId)  {
-
-        User user = userDao.findOne(userId);
-        if(user == null){
-            throw new NotFoundException("Utilisateur inexistant.Reverifiez l'id");
-        }
-        return  user;
+        return userService.findOne(userId);
     }
 
     @POST
     @Path("/")
     public User create(User user)
     {
-        userDao.save(user);
-        return user;       
+        return userService.create(user);   
     }
 
 

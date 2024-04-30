@@ -15,7 +15,7 @@ public class TicketDao extends AbstractJpaDao<Long,Ticket> {
 
     public List<Ticket> getTicketsByProject(Long projectId){
 
-        String query = "select t from Ticket t where t.project.id = :projectId";
+        String query = "select t from Ticket t where t.project.id = :projectId ORDER BY t.createdAt DESC";
 
         List<Ticket> tickets = this.entityManager
                                 .createQuery(query, Ticket.class)
@@ -27,13 +27,15 @@ public class TicketDao extends AbstractJpaDao<Long,Ticket> {
 
 
 
-    public List<Ticket> geTicketsByStatus(TicketState state){
-        String query = "select t from Ticket as t where t.state = :state";
+    public List<Ticket> geTicketsByProjectAndState(Long projectId,TicketState state){
+        String query = "select t from Ticket t where t.project.id = :projectId and t.state = :state ORDER BY t.createdAt DESC";
 
         List<Ticket> tickets = this.entityManager
-                                    .createQuery(query, Ticket.class)
-                                    .setParameter("state", state)
-                                    .getResultList();
+                                .createQuery(query, Ticket.class)
+                                .setParameter("projectId", projectId)
+                                .setParameter("state", state)
+                                .getResultList();
+        System.out.println(tickets);
         return tickets;
 
     }

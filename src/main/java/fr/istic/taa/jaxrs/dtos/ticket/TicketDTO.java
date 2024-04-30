@@ -1,6 +1,7 @@
 package fr.istic.taa.jaxrs.dtos.ticket;
 
 import fr.istic.taa.jaxrs.models.User;
+import fr.istic.taa.jaxrs.models.enums.TicketState;
 import fr.istic.taa.jaxrs.models.Tag;
 import java.util.List;
 import java.util.Date;
@@ -15,11 +16,13 @@ public class TicketDTO {
     private User creator;
     private List<User> assignedUsers ;
     private List <Tag> tags;
+    private TicketState state;
 
+    
 
     public TicketDTO(){}
 
-    public TicketDTO(Long id, String title, String description, Date createdAt, User creator, List<User> assignedUsers, List<Tag> tags) {
+    public TicketDTO(Long id, String title, String description,TicketState state, Date createdAt, User creator, List<User> assignedUsers, List<Tag> tags) {
         this.id = id;
         this.title = title;
         this.createdAt = createdAt;
@@ -27,6 +30,7 @@ public class TicketDTO {
         this.creator = creator;
         this.assignedUsers = assignedUsers;
         this.tags = tags;
+        this.state = state;
     }
    
 
@@ -86,6 +90,15 @@ public class TicketDTO {
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
+
+    public TicketState getState() {
+        return this.state;
+    }
+
+    public void setState(TicketState state) {
+        this.state = state;
+    }
+
 
     
    

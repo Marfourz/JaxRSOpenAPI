@@ -45,6 +45,13 @@ public class User implements Serializable {
         this.role = role;
     }
 
+    public User(String username, String firstname, String lastname, Role role) {
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.role = role;
+    }
+
 
 
     @Id

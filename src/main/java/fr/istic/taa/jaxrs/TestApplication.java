@@ -19,8 +19,6 @@ package fr.istic.taa.jaxrs;
 import java.util.HashSet;
 import java.util.Set;
 
-import fr.istic.taa.jaxrs.models.Ticket;
-import fr.istic.taa.jaxrs.models.User;
 import fr.istic.taa.jaxrs.rest.ProjectResource;
 import fr.istic.taa.jaxrs.rest.SwaggerResource;
 import fr.istic.taa.jaxrs.rest.TagResource;
@@ -54,5 +52,7 @@ public class TestApplication extends Application {
 
         return resources;
     }
+
+    
 
 }

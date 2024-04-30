@@ -13,6 +13,8 @@ import fr.istic.taa.jaxrs.models.Project;
 import fr.istic.taa.jaxrs.models.Tag;
 import fr.istic.taa.jaxrs.models.Ticket;
 import fr.istic.taa.jaxrs.models.User;
+import fr.istic.taa.jaxrs.models.enums.Role;
+import fr.istic.taa.jaxrs.models.enums.TicketState;
 
 public class TicketService {
     
@@ -33,12 +35,19 @@ public class TicketService {
     public Ticket create(TicketCreateDTO ticketDto){
 
         Project project = projectDao.getReference(ticketDto.getProjectId());
-        User creator = userDao.getReference(ticketDto.getProjectId());
         List<Tag> tags = tagDao.findManyById(ticketDto.getTagIds());
 
         List<User> assignedUsers = userDao.findManyById(ticketDto.getAssignedUserIds());
 
         Ticket ticket = new Ticket();
+
+        
+        User creator = userDao.findByUsername("Admin");
+
+        if(creator == null){
+            creator = new User("Admin", "BOUKARI", "Marfourz", Role.ADMIN);
+            userDao.save(creator);
+        }
 
         ticket.setTitle(ticketDto.getTitle());
         ticket.setDescription(ticketDto.getDescription());
@@ -54,21 +63,36 @@ public class TicketService {
     }
 
 
-    public List<TicketDTO> findByProject(Long projectId){
-        List<Ticket> tickets = ticketDao.getTicketsByProject(projectId);
+    public List<TicketDTO> findByProject(Long projectId, TicketState state){
+        List<Ticket> tickets = new ArrayList<Ticket>();
+
+        if(state == null){
+            tickets = ticketDao.getTicketsByProject(projectId);
+        }
+        else {
+            tickets = ticketDao.geTicketsByProjectAndState(projectId, state);
+        }
+        return mapToDTOList(tickets);
+    }
+
+    public List<TicketDTO> findByProjectAndState(Long projectId, TicketState state){
+        List<Ticket> tickets = ticketDao.geTicketsByProjectAndState(projectId, state);
         return mapToDTOList(tickets);
     }
 
 
 
     private TicketDTO mapToDTO(Ticket ticket) {
-        return new TicketDTO(ticket.getId(), 
-        ticket.getTitle(), 
-        ticket.getDescription(),
-        ticket.getCreatedAt(),
-        ticket.getCreator(),
-        ticket.getAssignedUsers(),
-        ticket.getTags());
+        return new TicketDTO(
+            ticket.getId(), 
+            ticket.getTitle(), 
+            ticket.getDescription(),
+            ticket.getState(),
+            ticket.getCreatedAt(),
+            ticket.getCreator(),
+            ticket.getAssignedUsers(),
+            ticket.getTags()
+        );
     }
 
     private List<TicketDTO> mapToDTOList(List<Ticket> tickets) {

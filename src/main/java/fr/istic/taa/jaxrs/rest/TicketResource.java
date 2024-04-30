@@ -9,6 +9,7 @@ import fr.istic.taa.jaxrs.dtos.ticket.TicketCreateDTO;
 import fr.istic.taa.jaxrs.dtos.ticket.TicketDTO;
 import fr.istic.taa.jaxrs.models.Project;
 import fr.istic.taa.jaxrs.models.Ticket;
+import fr.istic.taa.jaxrs.models.enums.TicketState;
 import fr.istic.taa.jaxrs.services.TicketService;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -38,8 +39,11 @@ public class TicketResource {
 
     @GET
     @Path("/")
-    public List<TicketDTO> getTickets(@QueryParam("projectId") Long projectId){
-        List<TicketDTO> tickets = ticketService.findByProject(projectId);
+    public List<TicketDTO> getTickets(
+        @QueryParam("projectId") Long projectId,
+        @QueryParam("state") TicketState state)
+    {
+        List<TicketDTO> tickets = ticketService.findByProject(projectId,state);
         return tickets;
     }
 
