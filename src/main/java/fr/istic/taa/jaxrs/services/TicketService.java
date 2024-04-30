@@ -75,13 +75,6 @@ public class TicketService {
         return mapToDTOList(tickets);
     }
 
-    public List<TicketDTO> findByProjectAndState(Long projectId, TicketState state){
-        List<Ticket> tickets = ticketDao.geTicketsByProjectAndState(projectId, state);
-        return mapToDTOList(tickets);
-    }
-
-
-
     private TicketDTO mapToDTO(Ticket ticket) {
         return new TicketDTO(
             ticket.getId(), 

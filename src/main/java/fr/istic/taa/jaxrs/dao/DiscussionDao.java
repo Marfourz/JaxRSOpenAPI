@@ -5,8 +5,8 @@ import fr.istic.taa.jaxrs.models.Discussion;
 
 public class DiscussionDao extends AbstractJpaDao<Long, Discussion> {
 
-    public DiscussionDao(Class<Discussion> clazz) {
-        super(clazz);
+    public DiscussionDao() {
+        super(Discussion.class);
     }
     
 }

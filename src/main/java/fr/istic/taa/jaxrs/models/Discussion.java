@@ -22,9 +22,7 @@ public class Discussion implements Serializable {
     public Discussion() {
     }
 
-    public Discussion(Long id, List<Message> messages, Ticket ticket) {
-        this.id = id;
-        this.messages = messages;
+    public Discussion(Ticket ticket) {
         this.ticket = ticket;
     }
 
