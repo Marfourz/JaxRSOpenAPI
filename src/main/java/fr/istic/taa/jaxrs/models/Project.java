@@ -48,6 +48,8 @@ public class Project implements Serializable {
         this.name = name;
     }
 
+    @Lob 
+    @Column(name="description", length=512)
     public String getDescription() {
         return this.description;
     }

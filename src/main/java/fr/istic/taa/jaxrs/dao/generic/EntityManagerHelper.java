@@ -1,5 +1,9 @@
 package fr.istic.taa.jaxrs.dao.generic;
 
+
+
+import java.util.logging.Logger;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -15,13 +19,22 @@ public class EntityManagerHelper {
 	}
 
 	public static EntityManager getEntityManager() {
+		
 		EntityManager em = threadLocal.get();
-
-		if (em == null) {
-			em = emf.createEntityManager();
-			threadLocal.set(em);
+		
+		try {
+			if (em == null) {
+				em = emf.createEntityManager();
+				threadLocal.set(em);
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
 		}
 		return em;
+		
 	}
 
 	public static void closeEntityManager() {

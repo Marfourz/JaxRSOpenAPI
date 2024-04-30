@@ -2,14 +2,19 @@ package fr.istic.taa.jaxrs.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 
 
 @Entity
@@ -17,23 +22,36 @@ public class Ticket implements Serializable{
 
     private Long id;
     private String title;
-    private LocalDateTime createdAt;
+    private Date createdAt;
     private String description;
     private User creator;
     private List<User> assignedUsers ;
     private List <Tag> tags;
     private Project project;
+    private List<Discussion> discussions;
+    
     
 
     public Ticket() {
     }
 
-    public Ticket(Long id, String title, LocalDateTime createdAt, String description) {
-        this.id = id;
+   
+
+    public Ticket(String title, String description, User creator, List<User> assignedUsers, List<Tag> tags, Project project) {
         this.title = title;
-        this.createdAt = createdAt;
         this.description = description;
+        this.creator = creator;
+        this.assignedUsers = assignedUsers;
+        this.tags = tags;
+        this.project = project;
     }
+
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date(); 
+    }
+
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -61,6 +79,12 @@ public class Ticket implements Serializable{
     public Project getProject() {
         return this.project;
     }
+
+    @OneToMany(mappedBy = "ticket", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<Discussion> getDiscussions(){
+        return discussions;
+    }
+
 
     public void setProject(Project project) {
         this.project = project;
@@ -100,11 +124,11 @@ public class Ticket implements Serializable{
         this.title = title;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return this.createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -113,6 +137,17 @@ public class Ticket implements Serializable{
     public void setDescription(String description) {
         this.description = description;
     }
+
+
+
+    public void setDiscussions(List<Discussion> discussions){
+        this.discussions = discussions;
+    }
+
+    public void addDiscussions(Discussion discussion){
+        this.discussions.add(discussion);
+    }
+
    
     @Override
     public String toString() {
